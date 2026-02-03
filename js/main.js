@@ -17,7 +17,7 @@ document.querySelectorAll('.course-tab').forEach(tab => {
         document.getElementById(courseId).classList.add('active');
 
         // Scroll to top of content
-        window.scrollTo({ top: 150, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 });
 
