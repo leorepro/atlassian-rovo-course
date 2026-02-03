@@ -16,8 +16,10 @@
     --card-border: rgba(255, 255, 255, 0.1);
     --success-green: #36B37E;
     --warning-yellow: #FFAB00;
-    --course-beginner: #36B37E;
-    --course-intermediate: #FFAB00;
+    --course-entry: #36B37E;        /* 入門 - 綠色 */
+    --course-beginner: #4C9AFF;     /* 初階 - 藍色 */
+    --course-intermediate: #FFAB00; /* 中階 - 橘黃色 */
+    --course-advanced: #FF5630;     /* 高階 - 紅色 */
 }
 
 /* Reset & Base */
@@ -142,6 +144,11 @@ body {
     font-weight: 700;
 }
 
+.course-tab .level-badge.entry {
+    background: var(--course-entry);
+    color: white;
+}
+
 .course-tab .level-badge.beginner {
     background: var(--course-beginner);
     color: white;
@@ -150,6 +157,11 @@ body {
 .course-tab .level-badge.intermediate {
     background: var(--course-intermediate);
     color: #1a1a2e;
+}
+
+.course-tab .level-badge.advanced {
+    background: var(--course-advanced);
+    color: white;
 }
 
 /* Course Content Sections */
@@ -215,6 +227,11 @@ body {
     margin-bottom: 1rem;
 }
 
+.course-level-tag.entry {
+    background: var(--course-entry);
+    color: white;
+}
+
 .course-level-tag.beginner {
     background: var(--course-beginner);
     color: white;
@@ -223,6 +240,11 @@ body {
 .course-level-tag.intermediate {
     background: var(--course-intermediate);
     color: #1a1a2e;
+}
+
+.course-level-tag.advanced {
+    background: var(--course-advanced);
+    color: white;
 }
 
 .hero h1 {
