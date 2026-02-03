@@ -8,8 +8,8 @@ Atlassian Rovo AI 課程網站，提供從入門到高階的完整課程系列�
 |------|------|------|------|
 | Rovo AI 免費入門 | 入門 | 60 分鐘 | Search、Chat、Agent 三大核心功能 |
 | Rovo Agent 開發實戰 | 初階 | 90 分鐘 | 從零建立 Agent，學會 Instructions 與 Actions |
-| Rovo Agent + Automation | 中階 | 90 分鐘 | JSON 輸出與批次建立 User Stories |
-| Multi-Agent 工作流程 | 高階 | 90 分鐘 | 多 Agent 協作與自動化工作流程 |
+| Rovo Agent + Automation | 中階 | 120 分鐘 | JSON 輸出與批次建立 User Stories |
+| Rovo Multi-Agent 工作流程 | 高階 | 180 分鐘 | 多 Agent 協作與自動化工作流程 |
 
 ## 專案結構
 
