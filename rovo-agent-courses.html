@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlassian Rovo 實戰課程系列｜從入門到進階</title>
+    <meta name="description" content="Rovo 完整課程系列：AI 入門、Agent 開發、Multi-Agent 工作流程、Automation 整合。由 Atlassian 官方認證專家授課。">
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --atlassian-blue: #0052CC;
+            --atlassian-blue-dark: #0747A6;
+            --atlassian-blue-light: #4C9AFF;
+            --rovo-gradient-start: #6554C0;
+            --rovo-gradient-end: #00B8D9;
+            --bg-dark: #091E42;
+            --bg-darker: #0D1117;
+            --text-white: #FFFFFF;
+            --text-light: #B3BAC5;
+            --text-muted: #8993A4;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --success-green: #36B37E;
+            --warning-yellow: #FFAB00;
+            --course-beginner: #36B37E;
+            --course-intermediate: #FFAB00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(180deg, #0D1117 0%, #091E42 50%, #1a1a2e 100%);
+            color: var(--text-white);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(9, 30, 66, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .nav-logo svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--rovo-gradient-start), var(--rovo-gradient-end));
+            color: white;
+            padding: 0.625rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(101, 84, 192, 0.4);
+        }
+
+        /* Course Tabs */
+        .course-tabs-container {
+            padding-top: 80px;
+            background: rgba(9, 30, 66, 0.5);
+            position: sticky;
+            top: 60px;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .course-tabs {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            flex-wrap: wrap;
+        }
+
+        .course-tab {
+            padding: 0.75rem 1.25rem;
+            border: 2px solid var(--card-border);
+            border-radius: 50px;
+            background: transparent;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+
+        .course-tab:hover {
+            border-color: rgba(101, 84, 192, 0.5);
+            background: rgba(101, 84, 192, 0.1);
+        }
+
+        .course-tab.active {
+            background: linear-gradient(135deg, var(--rovo-gradient-start), var(--rovo-gradient-end));
+            border-color: transparent;
+            color: white;
+        }
+
+        .course-tab .level-badge {
+            font-size: 0.65rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        .course-tab .level-badge.beginner {
+            background: var(--course-beginner);
+            color: white;
+        }
+
+        .course-tab .level-badge.intermediate {
+            background: var(--course-intermediate);
+            color: #1a1a2e;
+        }
+
+        /* Course Content Sections */
+        .course-content {
+            display: none;
+        }
+
+        .course-content.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(101, 84, 192, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, rgba(101, 84, 192, 0.2), rgba(0, 184, 217, 0.2));
+            border: 1px solid rgba(101, 84, 192, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            color: var(--rovo-gradient-end);
+        }
+
+        .hero-badge svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .course-level-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .course-level-tag.beginner {
+            background: var(--course-beginner);
+            color: white;
+        }
+
+        .course-level-tag.intermediate {
+            background: var(--course-intermediate);
+            color: #1a1a2e;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #FFFFFF 0%, #B3BAC5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-highlight {
+            background: linear-gradient(135deg, var(--rovo-gradient-start), var(--rovo-gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--rovo-gradient-start), var(--rovo-gradient-end));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(101, 84, 192, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-white);
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--card-border);
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .hero-meta-item svg {
+            width: 20px;
+            height: 20px;
+            color: var(--atlassian-blue-light);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-tag {
+            color: var(--rovo-gradient-end);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(1.75rem, 3vw, 2.25rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-light);
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Pain Points Section */
+        .pain-points {
+            background: linear-gradient(180deg, transparent, rgba(101, 84, 192, 0.05), transparent);
+        }
+
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .pain-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .pain-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(101, 84, 192, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .pain-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, rgba(101, 84, 192, 0.2), rgba(0, 184, 217, 0.2));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .pain-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .pain-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .pain-solution {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(101, 84, 192, 0.1), rgba(0, 184, 217, 0.1));
+            border-radius: 12px;
+            border: 1px solid rgba(101, 84, 192, 0.2);
+        }
+
+        .pain-solution p {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .pain-solution strong {
+            color: var(--rovo-gradient-end);
+        }
+
+        /* Curriculum Section */
+        .curriculum-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .curriculum-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .curriculum-card:hover {
+            border-color: rgba(101, 84, 192, 0.4);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .curriculum-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--rovo-gradient-start), var(--rovo-gradient-end));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .curriculum-content h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .curriculum-content h3 span {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--rovo-gradient-end);
+            margin-top: 0.25rem;
+        }
+
+        .curriculum-content > p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .curriculum-list {
+            list-style: none;
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .curriculum-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .curriculum-list li::before {
+            content: '✓';
+            color: var(--success-green);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Results Table */
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+        }
+
+        .results-table th,
+        .results-table td {
+            padding: 1rem 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .results-table th {
+            background: linear-gradient(135deg, rgba(101, 84, 192, 0.2), rgba(0, 184, 217, 0.2));
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .results-table th:first-child {
+            border-radius: 12px 0 0 0;
+        }
+
+        .results-table th:last-child {
+            border-radius: 0 12px 0 0;
+        }
+
+        .results-table td {
+            background: var(--card-bg);
+        }
+
+        .results-table tr:last-child td:first-child {
+            border-radius: 0 0 0 12px;
+        }
+
+        .results-table tr:last-child td:last-child {
+            border-radius: 0 0 12px 0;
+        }
+
+        .before-text {
+            color: var(--text-muted);
+        }
+
+        .after-text {
+            color: var(--success-green);
+            font-weight: 500;
+        }
+
+        /* Audience Section */
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .audience-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .audience-card.positive {
+            border-color: rgba(54, 179, 126, 0.3);
+        }
+
+        .audience-card.negative {
+            border-color: rgba(255, 171, 0, 0.3);
+        }
+
+        .audience-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .audience-card.positive h3 {
+            color: var(--success-green);
+        }
+
+        .audience-card.negative h3 {
+            color: var(--warning-yellow);
+        }
+
+        .audience-list {
+            list-style: none;
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .audience-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .audience-list li span {
+            flex-shrink: 0;
+        }
+
+        /* Prerequisites */
+        .prerequisites {
+            background: linear-gradient(135deg, rgba(255, 171, 0, 0.1), rgba(255, 86, 48, 0.1));
+            border: 1px solid rgba(255, 171, 0, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .prerequisites h4 {
+            color: var(--warning-yellow);
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .prerequisites p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Course Info Card */
+        .course-info-card {
+            background: linear-gradient(135deg, rgba(101, 84, 192, 0.15), rgba(0, 184, 217, 0.15));
+            border: 1px solid rgba(101, 84, 192, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .course-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .course-info-item {
+            text-align: center;
+        }
+
+        .course-info-item .icon {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-info-item .label {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .course-info-item .value {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .course-cta-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--card-border);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .course-tabs {
+                gap: 0.4rem;
+                padding: 0.75rem 1rem;
+            }
+
+            .course-tab {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.75rem;
+            }
+
+            .course-tab .level-badge {
+                font-size: 0.6rem;
+                padding: 0.1rem 0.3rem;
+            }
+
+            .curriculum-card {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .curriculum-number {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+
+            .audience-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-content">
+            <div class="nav-logo">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#6554C0"></stop>
+                            <stop offset="100%" style="stop-color:#00B8D9"></stop>
+                        </linearGradient>
+                    </defs>
+                    <path d="M16 4L4 28h8l4-8 4 8h8L16 4z" fill="url(#logoGradient)"></path>
+                </svg>
+                <span>Atlassian Rovo 課程</span>
+            </div>
+            <a href="mailto:leo.chiang@titansoft.com.sg?subject=Rovo%20課程報名詢問" class="nav-cta">立即報名</a>
+        </div>
+    </nav>
+
+    <!-- Course Tabs -->
+    <div class="course-tabs-container">
+        <div class="course-tabs">
+            <button class="course-tab active" data-course="course0">
+                <span>Rovo AI 入門</span>
+                <span class="level-badge beginner">入門</span>
+            </button>
+            <button class="course-tab" data-course="course1">
+                <span>Agent 開發實戰</span>
+                <span class="level-badge beginner">初階</span>
+            </button>
+            <button class="course-tab" data-course="course2">
+                <span>Multi-Agent 工作流程</span>
+                <span class="level-badge intermediate">中階</span>
+            </button>
+            <button class="course-tab" data-course="course3">
+                <span>Automation + Agent</span>
+                <span class="level-badge intermediate">中階</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Course 0: Rovo AI 入門實戰（原本的課程） -->
+    <div id="course0" class="course-content active">
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                    </svg>
+                    <span>Atlassian 官方認證專家授課</span>
+                </div>
+                <span class="course-level-tag beginner">入門課程</span>
+                <h1>Atlassian Rovo AI<br><span class="hero-highlight">入門實戰課程</span></h1>
+                <p class="hero-subtitle">讓 AI 成為你的工作夥伴，不只是聊天機器人。<br>60 分鐘帶你掌握 Search、Chat、Agent 三大核心功能。</p>
+                <div class="hero-cta-group">
+                    <a href="mailto:leo.chiang@titansoft.com.sg?subject=Rovo%20AI%20入門課程報名" class="btn-primary">
+                        <span>立即報名</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                    <a href="#curriculum0" class="btn-secondary">查看課程大綱</a>
+                </div>
+                <div class="hero-meta">
+                    <div class="hero-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 6v6l4 2"></path>
+                        </svg>
+                        <span>60 分鐘高效學習</span>
+                    </div>
+                    <div class="hero-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                        </svg>
+                        <span>適合所有知識工作者</span>
+                    </div>
+                    <div class="hero-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                            <path d="M3 9h18"></path>
+                        </svg>
+                        <span>整合 Jira & Confluence</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pain Points -->
+        <section class="pain-points">
+            <div class="section-header">
+                <p class="section-tag">你的痛點</p>
+                <h2 class="section-title">是不是也遇到這些問題？</h2>
+            </div>
+            <div class="pain-grid">
+                <div class="pain-card">
+                    <div class="pain-icon">🔍</div>
+                    <h3>找資料像大海撈針</h3>
+                    <p>公司文件散落在 Confluence、Jira、Google Drive、Slack⋯⋯每次要找一份規格書，花的時間比寫的時間還長。</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">💬</div>
+                    <h3>AI 工具用了，但好像沒什麼用</h3>
+                    <p>試過 ChatGPT，但它不認識你的專案、不知道公司流程、給的答案總是「通用」但不「實用」。</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">📋</div>
+                    <h3>重複性工作吃掉你的時間</h3>
+                    <p>每週整理進度報告、每次寫 Release Notes、每個新人 Onboarding⋯⋯明明是固定格式，卻還是要手動做。</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">🤷</div>
+                    <h3>想用 AI，但不知道從哪開始</h3>
+                    <p>聽過很多 AI 工具，但不確定哪個適合自己的工作場景，也不知道怎麼寫出有效的 Prompt。</p>
+                </div>
+            </div>
+            <div class="pain-solution">
+                <p>問題不是你不夠努力，而是缺少一個<strong>「懂你工作脈絡」</strong>的 AI 助手。</p>
+            </div>
+        </section>
+
+        <!-- Curriculum -->
+        <section id="curriculum0">
+            <div class="section-header">
+                <p class="section-tag">課程大綱</p>
+                <h2 class="section-title">60 分鐘學會什麼？</h2>
+                <p class="section-subtitle">四個核心模組，從觀念到實用方法，一次搞懂 Rovo</p>
+            </div>
+            <div class="curriculum-grid">
+                <div class="curriculum-card">
+                    <div class="curriculum-number">1</div>
+                    <div class="curriculum-content">
+                        <h3>Prompt 基礎心法<span>讓 AI 聽懂你在說什麼</span></h3>
+                        <p>掌握與 AI 溝通的核心技巧，從此告別「AI 聽不懂我」的困擾。</p>
+                        <ul class="curriculum-list">
+                            <li>什麼是 Prompt？為什麼「問法」決定「答案品質」？</li>
+                            <li>好 Prompt 的三要素：角色（Role）、任務（Job）、背景（Context）</li>
+                            <li>可選元素：格式、語氣、來源、範例</li>
+                            <li>迭代思維：用後續提示優化結果</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="curriculum-card">
+                    <div class="curriculum-number">2</div>
+                    <div class="curriculum-content">
+                        <h3>Rovo Search<span>跨平台智慧搜尋</span></h3>
+                        <p>一個入口，找到所有答案。整合企業內所有知識來源。</p>
+                        <ul class="curriculum-list">
+                            <li>整合 Atlassian Cloud + 第三方平台（Slack、Google Drive、Figma、GitHub⋯）</li>
+                            <li>搜尋書籤（Bookmarks）：管理員設定常見問題的「秒答」捷徑</li>
+                            <li>知識卡片（Knowledge Cards）：自動彙整專案、術語、流程定義</li>
+                            <li>實戰場景：企業知識管理、跨團隊協作、客服支援</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="curriculum-card">
+                    <div class="curriculum-number">3</div>
+                    <div class="curriculum-content">
+                        <h3>Rovo Chat<span>對話式知識存取</span></h3>
+                        <p>像問同事一樣問 AI，直接查詢組織內部知識。</p>
+                        <ul class="curriculum-list">
+                            <li>透過對話介面，直接查詢組織內部知識</li>
+                            <li>@ 提及人員/團隊、貼上 Smart Link 精確指定檔案</li>
+                            <li>Definition 功能：滑鼠懸停即顯示術語定義</li>
+                            <li>實戰應用：會議議程生成、簡報大綱撰寫、Onboarding 文件整理</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="curriculum-card">
+                    <div class="curriculum-number">4</div>
+                    <div class="curriculum-content">
+                        <h3>Rovo Agent<span>你的 AI 虛擬隊友</span></h3>
+                        <p>不只回答問題，還能幫你執行任務。</p>
+                        <ul class="curriculum-list">
+                            <li>開箱即用的官方 Agent：Issue Organizer、Release Notes Drafter</li>
+                            <li>Progress Tracker（專案進度追蹤）、Product Requirements Expert（PRD 審查）</li>
+                            <li>Studio 簡介：用自然語言打造專屬 Agent（概念介紹）</li>
+                            <li>100+ Agent Skills：建立頁面、建立 Issue、轉換狀態、加入 Sprint</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results -->
+        <section>
+            <div class="section-header">
+                <p class="section-tag">學習成果</p>
+                <h2 class="section-title">上完這堂課，你會獲得什麼？</h2>
+            </div>
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>之前 😫</th>
+                        <th>之後 ✨</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="before-text">資料散落各處，找半天</td>
+                        <td class="after-text">一個搜尋框，跨平台秒找</td>
+                    </tr>
+                    <tr>
+                        <td class="before-text">AI 回答很「通用」</td>
+                        <td class="after-text">AI 回答基於「你的專案脈絡」</td>
+                    </tr>
+                    <tr>
+                        <td class="before-text">每次寫報告都從零開始</td>
+                        <td class="after-text">Agent 幫你草擬，你負責審核</td>
+                    </tr>
+                    <tr>
+                        <td class="before-text">不知道怎麼寫 Prompt</td>
+                        <td class="after-text">掌握角色+任務+背景的黃金公式</td>
+                    </tr>
+                    <tr>
+                        <td class="before-text">聽過 Rovo，但不知道怎麼用</td>
+                        <td class="after-text">清楚 Search / Chat / Agent 三大功能的應用場景</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Audience -->
+        <section>
+            <div class="section-header">
+                <p class="section-tag">適合對象</p>
+                <h2 class="section-title">這堂課適合誰？</h2>
+            </div>
+            <div class="audience-grid">
+                <div class="audience-card positive">
+                    <h3><span>✅</span> 適合你，如果你是</h3>
+                    <ul class="audience-list">
+                        <li><span>👤</span> 專案經理（PM）：需要快速掌握專案狀態、整理會議記錄</li>
+                        <li><span>💻</span> 軟體工程師：想加速 Jira 操作、自動生成 Release Notes</li>
+                        <li><span>👥</span> HR / 人資：需要建立 Onboarding 流程、整理政策文件</li>
+                        <li><span>📊</span> 團隊主管：想了解 AI 如何提升團隊效率</li>
+                        <li><span>🎯</span> 任何使用 Jira / Confluence 的知識工作者</li>
+                    </ul>
+                </div>
+                <div class="audience-card negative">
+                    <h3><span>⚠️</span> 這堂課不適合你，如果</h3>
+                    <ul class="audience-list">
+                        <li><span>❌</span> 你從未使用過 Jira 或 Confluence（建議先熟悉基本操作）</li>
+                        <li><span>❌</span> 你想學習如何「從零開發自訂 Rovo Agent」（請參加 Agent 開發課程）</li>
+                        <li><span>❌</span> 你想學習 Automation 自動化規則設定（請參加進階課程）</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Course Info -->
+        <section>
+            <div class="section-header">
+                <p class="section-tag">課程資訊</p>
+                <h2 class="section-title">準備好開始了嗎？</h2>
+            </div>
+            <div class="course-info-card">
+                <div class="course-info-grid">
+                    <div class="course-info-item">
+                        <div class="icon">⏱</div>
+                        <div class="label">課程時長</div>
+                        <div class="value">60 分鐘</div>
+                    </div>
+                    <div class="course-info-item">
+                        <div class="icon">📍</div>
+                        <div class="label">授課形式</div>
+                        <div class="value">線上 / 企業內訓</div>
+                    </div>
+                    <div class="course-info-item">
+                        <div class="icon">🎯</div>
+                        <div class="label">適合對象</div>
+                        <div class="value">知識工作者</div>
+                    </div>
+                    <div class="course-info-item">
+                        <div class="icon">📦</div>
+                        <div class="label">涵蓋產品</div>
+                        <div class="value">Jira・Confluence・Rovo</div>
+                    </div>
+                </div>
+                <div class="course-cta-group">
+                    <a href="mailto:leo.chiang@titansoft.com.sg?subject=Rovo%20AI%20入門課程報名" class="btn-primary">
+                        <span>立即報名</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                    <a href="mailto:leo.chiang@titansoft.com.sg?subject=企業內訓洽詢" class="btn-secondary">洽詢企業內訓</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Course 1: Rovo Agent 入門實戰 -->
+    <div id="course1" class="course-content">
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                    </svg>
+                    <span>Atlassian 官方認證專家授課</span>
+                </div>
+                <span class="course-level-tag beginner">初階課程</span>
+                <h1>Rovo Agent<br><span class="hero-highlight">開發實戰課程</span></h1>
+                <p class="hero-subtitle">從零開始建立你的第一個 Rovo Agent，學會撰寫 Instructions、新增 Action、結合 Automation，打造專屬的 AI 助手。</p>
+                <div class="hero-cta-group">
+                    <a href="mailto:leo.chiang@titansoft.com.sg?subject=Rovo%20Agent%20開發課程報名" class="btn-primary">
+                        <span>立即報名</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                    <a href="#curriculum1" class="btn-secondary">查看課程大綱</a>
+                </div>
+                <div class="hero-meta">
+                    <div class="hero-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 6v6l4 2"></path>
+                        </svg>
+                        <span>90 分鐘實作課程</span>
+                    </div>
+                    <div class="hero-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                        </svg>
+                        <span>適合初學者</span>
+                    </div>
+                    <div class="hero-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                            <path d="M3 9h18"></path>
+                        </svg>
+                        <span>5 個實作練習</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pain Points -->
+        <section class="pain-points">
+            <div class="section-header">
+                <p class="section-tag">你的痛點</p>
+                <h2 class="section-title">這堂課幫你解決什麼問題？</h2>
+            </div>
+            <div class="pain-grid">
+                <div class="pain-card">
+                    <div class="pain-icon">🤖</div>
+                    <h3>想用 AI 但不知從何開始</h3>
+                    <p>聽過 Rovo Agent，但不知道怎麼建立、怎麼設定、怎麼讓它真正幫到你。</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">📝</div>
+                    <h3>重複審查工作耗時費力</h3>
+                    <p>每次審查 Bug Report 都要花時間檢查格式、確認資訊是否完整，效率低落。</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">💬</div>
+                    <h3>AI 回答太冗長不實用</h3>
+                    <p>Agent 總是給出一堆廢話，不知道怎麼讓它只輸出你要的內容。</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">⚙️</div>
+                    <h3>手動複製貼上太麻煩</h3>
+                    <p>Agent 給的建議還要手動複製到 Jira，希望能自動化這個流程。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Curriculum -->
+        <section id="curriculum1">
+            <div class="section-header">
+                <p class="section-tag">課程大綱</p>
+                <h2 class="section-title">你會學到什麼？</h2>
+                <p class="section-subtitle">5 個實作練習，從建立到優化，完整掌握 Agent 開發流程</p>
+            </div>
+            <div class="curriculum-grid">
+                <div class="curriculum-card">
+                    <div class="curriculum-number">1</div>
+                    <div class="curriculum-content">
+                        <h3>建立你的第一個 Agent<span>Create the Agent</span></h3>
+                        <p>從零開始建立 Bug Review Agent，學會撰寫有效的 Instructions。</p>
+                        <ul class="curriculum-list">
+                            <li>Agent 建立流程與介面操作</li>
+                            <li>Instructions 四大要素：角色、目標、人設、輸出格式</li>
+                            <li>設定 Conversation Starters</li>
+                            <li>測試與驗證 Agent 行為</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="curriculum-card">
+                    <div class="curriculum-number">2</div>
+                    <div class="curriculum-content">
+                        <h3>優化 Agent 輸出<span>Improve Your Agent</span></h3>
+                        <p>學會控制 Agent 輸出，移除冗餘訊息，只保留有價值的內容。</p>
+                        <ul class="curriculum-list">
+                            <li>移除開頭與結尾的冗餘訊息</li>
+                            <li>避免重複 Summary 與 Description</li>
+                            <li>讓 Agent 只輸出改善建議</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="curriculum-card">
+                    <div class="curriculum-number">3</div>
+                    <div class="curriculum-content">
+                        <h3>新增 Action 功能<span>Add an Action</span></h3>
+                        <p>讓 Agent 不只能回答，還能直接執行動作。</p>
+                        <ul class="curriculum-list">
+                            <li>認識 Agent Actions</li>
+                            <li>新增「Add comment to work item」功能</li>
+                            <li>實作：讓 Agent 自動將建議寫入 Jira Comment</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="curriculum-card">
+                    <div class="curriculum-number">4</div>
+                    <div class="curriculum-content">
+                        <h3>處理例外情境<span>Acknowledge Good Bug Reports</span></h3>
+                        <p>讓 Agent 學會判斷，遇到優質報告時給出不同回應。</p>
+                        <ul class="curriculum-list">
+                            <li>問題分析：Agent 總是有話要說</li>
+                            <li>運用 Agent 自我優化 Instructions</li>
+                            <li>迭代調整技巧與除錯方法</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="curriculum-card">
+                    <div class="curriculum-number">5</div>
+                    <div class="curriculum-content">
+                        <h3>結合 Automation<span>Try Out the Automation</span></h3>
+                        <p>將 Agent 與 Jira Automation 結合，實現自動化工作流程。</p>
+                        <ul class="curriculum-list">
+                            <li>使用 AI 輔助建立 Automation Rule</li>
+                            <li>設定觸發條件與 Agent 呼叫</li>
+                            <li>條件判斷與自動 Comment</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Audience -->
+        <section>
+            <div class="section-header">
+                <p class="section-tag">適合對象</p>
+                <h2 class="section-title">這堂課適合誰？</h2>
+            </div>
+            <div class="audience-grid">
+                <div class="audience-card positive">
+                    <h3><span>✅</span> 適合你，如果你是</h3>
+                    <ul class="audience-list">
+                        <li><span>🆕</span> 從未建立過 Rovo Agent 的初學者</li>
+                        <li><span>👤</span> 想用 AI 自動化審查流程的 PM / QA</li>
+                        <li><span>💻</span> 希望減少重複性工作的工程師</li>
+                        <li><span>📊</span> 想了解 Agent 開發流程的團隊主管</li>
+                    </ul>
+                </div>
+                <div class="audience-card negative">
+                    <h3><span>⚠️</span> 這堂課可能不適合你，如果</h3>
+                    <ul class="audience-list">
+                        <li><span>❌</span> 你已經熟悉 Rovo Agent 建立流程</li>
+                        <li><span>❌</span> 你想學習多 Agent 協作（請參加進階課程）</li>
+                        <li><span>❌</span> 你從未使用過 Jira（建議先熟悉基本操作）</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Course Info -->
+        <section>
+            <div class="section-header">
+                <p class="section-tag">課程資訊</p>
+                <h2 class="section-title">準備好開始了嗎？</h2>
+            </div>
+            <div class="course-info-card">
+                <div class="course-info-grid">
+                    <div class="course-info-item">
+                        <div class="icon">⏱</div>
+                        <div class="label">課程時長</div>
+                        <div class="value">90 分鐘</div>
+                    </div>
+                    <div class="course-info-item">
+                        <div class="icon">📍</div>
+                        <div class="label">授課形式</div>
+                        <div class="value">線上 / 企業內訓</div>
+                    </div>
+                    <div class="course-info-item">
+                        <div class="icon">🎯</div>
+                        <div class="label">難度等級</div>
+                        <div class="value">初階</div>
+                    </div>
+                    <div class="course-info-item">
+                        <div class="icon">🛠</div>
+                        <div class="label">實作練習</div>
+                        <div class="value">5 個</div>
+                    </div>
+                </div>
+                <div class="course-cta-group">
+                    <a href="mailto:leo.chiang@titansoft.com.sg?subject=Rovo%20Agent%20開發課程報名" class="btn-primary">
+                        <span>立即報名</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                    <a href="mailto:leo.chiang@titansoft.com.sg?subject=企業內訓洽詢" class="btn-secondary">洽詢企業內訓</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Course 2: Multi-Agent 工作流程實戰 -->
+    <div id="course2" class="course-content">
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                    </svg>
+                    <span>Atlassian 官方認證專家授課</span>
+                </div>
+                <span class="course-level-tag intermediate">中階課程</span>
+                <h1>Multi-Agent<br><span class="hero-highlight">工作流程實戰</span></h1>
+                <p class="hero-subtitle">學會建立多個 Agent 協同工作，透過 Automation 串接，打造智慧化的自動審查與分類流程。</p>
+                <div class="hero-cta-group">
+                    <a href="mailto:leo.chiang@titansoft.com.sg?subject=Multi-Agent%20課程報名" class="btn-primary">
+                        <span>立即報名</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                    <a href="#curriculum2" class="btn-secondary">查看課程大綱</a>
+                </div>
+                <div class="hero-meta">
+                    <div class="hero-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 6v6l4 2"></path>
+                        </svg>
+                        <span>90 分鐘實作課程</span>
+                    </div>
+                    <div class="hero-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                        </svg>
+                        <span>需具備 Agent 基礎</span>
+                    </div>
+                    <div class="hero-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                            <path d="M3 9h18"></path>
+                        </svg>
+                        <span>3 個 Agent + 1 個 Workflow</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pain Points -->
+        <section class="pain-points">
+            <div class="section-header">
+                <p class="section-tag">你的痛點</p>
+                <h2 class="section-title">這堂課幫你解決什麼問題？</h2>
+            </div>
+            <div class="pain-grid">
+                <div class="pain-card">
+                    <div class="pain-icon">🏷️</div>
+                    <h3>Issue Type 常被選錯</h3>
+                    <p>使用者提交 Bug 時常選錯類型，需要人工重新分類，浪費時間。</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">🔄</div>
+                    <h3>審查流程太繁瑣</h3>
+                    <p>每次要檢查報告品質、提取環境資訊、指派負責人⋯⋯步驟太多。</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">📋</div>
+                    <h3>環境資訊散落在描述中</h3>
+                    <p>報告者把 OS、瀏覽器版本寫在描述裡，沒有填到專用欄位。</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">🤝</div>
+                    <h3>單一 Agent 能力有限</h3>
+                    <p>一個 Agent 做不了所有事，需要多個 Agent 分工合作。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Curriculum -->
+        <section id="curriculum2">
+            <div class="section-header">
+                <p class="section-tag">課程大綱</p>
+                <h2 class="section-title">你會學到什麼？</h2>
+                <p class="section-subtitle">建立 3 個 Agent，串接成完整的自動化工作流程</p>
+            </div>
+            <div class="curriculum-grid">
+                <div class="curriculum-card">
+                    <div class="curriculum-number">1</div>
+                    <div class="curriculum-content">
+                        <h3>建立 Bug Identifier Agent<span>Build a Bug Identifier Agent</span></h3>
+                        <p>建立能自動識別 Issue 是否為 Bug 的 Agent。</p>
+                        <ul class="curriculum-list">
+                            <li>使用 AI 輔助建立 Agent（不用手動設定）</li>
+                            <li>設計精準的輸出格式：「bug」或「no bug」</li>
+                            <li>學會如何讓 Agent 只輸出你要的內容</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="curriculum-card">
+                    <div class="curriculum-number">2</div>
+                    <div class="curriculum-content">
+                        <h3>建立 Field Analyzer Agent<span>Create a Field Analyzer Agent</span></h3>
+                        <p>建立能從描述中提取環境資訊的 Agent。</p>
+                        <ul class="curriculum-list">
+                            <li>分析描述中的 OS、瀏覽器、裝置資訊</li>
+                            <li>結構化輸出環境變數</li>
+                            <li>處理「無資訊」的例外情境</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="curriculum-card">
+                    <div class="curriculum-number">3</div>
+                    <div class="curriculum-content">
+                        <h3>建立多 Agent 工作流程<span>Building a Multi-Agent Workflow</span></h3>
+                        <p>將三個 Agent 串接成完整的自動化流程。</p>
+                        <ul class="curriculum-list">
+                            <li>使用 {{agentResponse}} 傳遞數據</li>
+                            <li>設計條件分支邏輯（IF / ELSE IF）</li>
+                            <li>自動變更 Issue Type、新增 Comment、指派負責人</li>
+                            <li>自動填寫 Environment 欄位</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Audience -->
+        <section>
+            <div class="section-header">
+                <p class="section-tag">適合對象</p>
+                <h2 class="section-title">這堂課適合誰？</h2>
+            </div>
+            <div class="audience-grid">
+                <div class="audience-card positive">
+                    <h3><span>✅</span> 適合你，如果你是</h3>
+                    <ul class="audience-list">
+                        <li><span>🎓</span> 已完成入門課程，想學進階技巧</li>
+                        <li><span>🔧</span> 想打造自動化審查流程的 QA / PM</li>
+                        <li><span>📊</span> 需要處理大量 Issue 分類的團隊</li>
+                        <li><span>🚀</span> 想了解多 Agent 協作模式的開發者</li>
+                    </ul>
+                </div>
+                <div class="audience-card negative">
+                    <h3><span>⚠️</span> 這堂課可能不適合你，如果</h3>
+                    <ul class="audience-list">
+                        <li><span>❌</span> 你從未建立過 Rovo Agent（請先上初階課程）</li>
+                        <li><span>❌</span> 你不熟悉 Jira Automation 基本概念</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="prerequisites">
+                <h4>⚠️ 先修條件</h4>
+                <p>本課程需要使用初階課程建立的 Bug Review Agent，建議先完成「Rovo Agent 開發實戰」課程。</p>
+            </div>
+        </section>
+
+        <!-- Course Info -->
+        <section>
+            <div class="section-header">
+                <p class="section-tag">課程資訊</p>
+                <h2 class="section-title">準備好開始了嗎？</h2>
+            </div>
+            <div class="course-info-card">
+                <div class="course-info-grid">
+                    <div class="course-info-item">
+                        <div class="icon">⏱</div>
+                        <div class="label">課程時長</div>
+                        <div class="value">90 分鐘</div>
+                    </div>
+                    <div class="course-info-item">
+                        <div class="icon">📍</div>
+                        <div class="label">授課形式</div>
+                        <div class="value">線上 / 企業內訓</div>
+                    </div>
+                    <div class="course-info-item">
+                        <div class="icon">🎯</div>
+                        <div class="label">難度等級</div>
+                        <div class="value">中階</div>
+                    </div>
+                    <div class="course-info-item">
+                        <div class="icon">🤖</div>
+                        <div class="label">建立 Agent 數</div>
+                        <div class="value">3 個</div>
+                    </div>
+                </div>
+                <div class="course-cta-group">
+                    <a href="mailto:leo.chiang@titansoft.com.sg?subject=Multi-Agent%20課程報名" class="btn-primary">
+                        <span>立即報名</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                    <a href="mailto:leo.chiang@titansoft.com.sg?subject=企業內訓洽詢" class="btn-secondary">洽詢企業內訓</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Course 3: Automation + Rovo Agent 整合實戰 -->
+    <div id="course3" class="course-content">
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                    </svg>
+                    <span>Atlassian 官方認證專家授課</span>
+                </div>
+                <span class="course-level-tag intermediate">中階課程</span>
+                <h1>Automation + Agent<br><span class="hero-highlight">整合實戰課程</span></h1>
+                <p class="hero-subtitle">學會讓 Agent 輸出 JSON 格式，結合 Automation 批次建立工作項目，將 Epic 自動拆解為多個 User Stories。</p>
+                <div class="hero-cta-group">
+                    <a href="mailto:leo.chiang@titansoft.com.sg?subject=Automation%20+%20Agent%20課程報名" class="btn-primary">
+                        <span>立即報名</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                    <a href="#curriculum3" class="btn-secondary">查看課程大綱</a>
+                </div>
+                <div class="hero-meta">
+                    <div class="hero-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 6v6l4 2"></path>
+                        </svg>
+                        <span>90 分鐘實作課程</span>
+                    </div>
+                    <div class="hero-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                        </svg>
+                        <span>需具備 Agent 基礎</span>
+                    </div>
+                    <div class="hero-meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                            <path d="M3 9h18"></path>
+                        </svg>
+                        <span>批次建立 User Stories</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pain Points -->
+        <section class="pain-points">
+            <div class="section-header">
+                <p class="section-tag">你的痛點</p>
+                <h2 class="section-title">這堂課幫你解決什麼問題？</h2>
+            </div>
+            <div class="pain-grid">
+                <div class="pain-card">
+                    <div class="pain-icon">📦</div>
+                    <h3>拆解 Epic 太花時間</h3>
+                    <p>每次都要手動分析 Epic、想 User Stories、一個個建立，耗時又容易遺漏。</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">📝</div>
+                    <h3>Agent 輸出格式不統一</h3>
+                    <p>Agent 給的建議是純文字，沒辦法直接被 Automation 解析使用。</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">🔗</div>
+                    <h3>無法批次建立工作項目</h3>
+                    <p>希望一次建立多個 User Stories，並自動關聯到 Epic。</p>
+                </div>
+                <div class="pain-card">
+                    <div class="pain-icon">⚡</div>
+                    <h3>想要更智慧的自動化</h3>
+                    <p>讓 AI 分析需求、自動產出 Stories，而不只是機械式的流程自動化。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Curriculum -->
+        <section id="curriculum3">
+            <div class="section-header">
+                <p class="section-tag">課程大綱</p>
+                <h2 class="section-title">你會學到什麼？</h2>
+                <p class="section-subtitle">掌握 JSON 輸出與批次建立技巧，實現智慧化工作項目生成</p>
+            </div>
+            <div class="curriculum-grid">
+                <div class="curriculum-card">
+                    <div class="curriculum-number">1</div>
+                    <div class="curriculum-content">
+                        <h3>建立 Story Builder Agent<span>Build an Epic-to-User-Stories Agent</span></h3>
+                        <p>建立能分析 Epic 並建議 User Stories 的 Agent。</p>
+                        <ul class="curriculum-list">
+                            <li>分析 Epic Description 並提取需求</li>
+                            <li>設計 TEXT 格式輸出：Story / Summary / Description</li>
+                            <li>使用「As a... I want to... So I can...」格式</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="curriculum-card">
+                    <div class="curriculum-number">2</div>
+                    <div class="curriculum-content">
+                        <h3>設定 JSON 格式輸出<span>Output in JSON Format</span></h3>
+                        <p>讓 Agent 能根據需求輸出 TEXT 或 JSON 格式。</p>
+                        <ul class="curriculum-list">
+                            <li>設計雙輸出模式：[TEXT FORMAT] / [JSON FORMAT]</li>
+                            <li>撰寫 JSON Schema 規範</li>
+                            <li>確保輸出為有效的 JSON 格式</li>
+                            <li>測試與驗證 JSON 輸出</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="curriculum-card">
+                    <div class="curriculum-number">3</div>
+                    <div class="curriculum-content">
+                        <h3>批次建立 User Stories<span>Create User Stories Automatically</span></h3>
+                        <p>結合 Automation 實現批次建立工作項目。</p>
+                        <ul class="curriculum-list">
+                            <li>使用 {{{agentResponse.aslist}}} 解析 JSON 陣列</li>
+                            <li>設定 Advanced Branching 迴圈處理</li>
+                            <li>自動建立 Stories 並關聯到 Epic</li>
+                            <li>使用 {{userstory.Summary}} 動態取值</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Audience -->
+        <section>
+            <div class="section-header">
+                <p class="section-tag">適合對象</p>
+                <h2 class="section-title">這堂課適合誰？</h2>
+            </div>
+            <div class="audience-grid">
+                <div class="audience-card positive">
+                    <h3><span>✅</span> 適合你，如果你是</h3>
+                    <ul class="audience-list">
+                        <li><span>🎓</span> 已完成入門課程，想學 JSON 輸出技巧</li>
+                        <li><span>👤</span> 需要快速拆解 Epic 的 PM / PO</li>
+                        <li><span>🔧</span> 想實現批次建立工作項目的團隊</li>
+                        <li><span>📊</span> 希望提升 Sprint Planning 效率的 Scrum Master</li>
+                    </ul>
+                </div>
+                <div class="audience-card negative">
+                    <h3><span>⚠️</span> 這堂課可能不適合你，如果</h3>
+                    <ul class="audience-list">
+                        <li><span>❌</span> 你從未建立過 Rovo Agent（請先上初階課程）</li>
+                        <li><span>❌</span> 你不熟悉 JSON 基本概念</li>
+                        <li><span>❌</span> 你不使用 Epic / User Story 的工作方式</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="prerequisites">
+                <h4>⚠️ 先修條件</h4>
+                <p>本課程需要具備 Rovo Agent 建立基礎，建議先完成「Rovo Agent 開發實戰」課程。</p>
+            </div>
+        </section>
+
+        <!-- Course Info -->
+        <section>
+            <div class="section-header">
+                <p class="section-tag">課程資訊</p>
+                <h2 class="section-title">準備好開始了嗎？</h2>
+            </div>
+            <div class="course-info-card">
+                <div class="course-info-grid">
+                    <div class="course-info-item">
+                        <div class="icon">⏱</div>
+                        <div class="label">課程時長</div>
+                        <div class="value">90 分鐘</div>
+                    </div>
+                    <div class="course-info-item">
+                        <div class="icon">📍</div>
+                        <div class="label">授課形式</div>
+                        <div class="value">線上 / 企業內訓</div>
+                    </div>
+                    <div class="course-info-item">
+                        <div class="icon">🎯</div>
+                        <div class="label">難度等級</div>
+                        <div class="value">中階</div>
+                    </div>
+                    <div class="course-info-item">
+                        <div class="icon">📦</div>
+                        <div class="label">核心技巧</div>
+                        <div class="value">JSON + 批次建立</div>
+                    </div>
+                </div>
+                <div class="course-cta-group">
+                    <a href="mailto:leo.chiang@titansoft.com.sg?subject=Automation%20+%20Agent%20課程報名" class="btn-primary">
+                        <span>立即報名</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                    <a href="mailto:leo.chiang@titansoft.com.sg?subject=企業內訓洽詢" class="btn-secondary">洽詢企業內訓</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
+                    <defs>
+                        <linearGradient id="footerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#6554C0"></stop>
+                            <stop offset="100%" style="stop-color:#00B8D9"></stop>
+                        </linearGradient>
+                    </defs>
+                    <path d="M16 4L4 28h8l4-8 4 8h8L16 4z" fill="url(#footerGradient)"></path>
+                </svg>
+                <span style="font-weight: 600;">Atlassian Rovo 課程</span>
+            </div>
+            <p>Atlassian Partner | TITANSOFT 鈦坦科技</p>
+            <p style="margin-top: 0.5rem;">© 2025 All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Course Tab Switching
+        document.querySelectorAll('.course-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active from all tabs
+                document.querySelectorAll('.course-tab').forEach(t => t.classList.remove('active'));
+                // Add active to clicked tab
+                tab.classList.add('active');
+
+                // Hide all course content
+                document.querySelectorAll('.course-content').forEach(content => content.classList.remove('active'));
+                // Show selected course content
+                const courseId = tab.getAttribute('data-course');
+                document.getElementById(courseId).classList.add('active');
+
+                // Scroll to top of content
+                window.scrollTo({ top: 150, behavior: 'smooth' });
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.pain-card, .curriculum-card, .audience-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
