@@ -574,8 +574,9 @@ section {
 /* Results Table */
 .results-table {
     width: 100%;
+    max-width: 700px;
+    margin: 2rem auto 0;
     border-collapse: collapse;
-    margin-top: 2rem;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: var(--shadow-sm);
@@ -583,22 +584,23 @@ section {
 
 .results-table th,
 .results-table td {
-    padding: 1rem 1.25rem;
-    text-align: left;
+    padding: 1rem 1.5rem;
+    text-align: center;
     border-bottom: 1px solid var(--neutral-100);
 }
 
 .results-table th {
     background: var(--neutral-50);
     font-weight: 600;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--neutral-600);
+    font-size: 1rem;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--neutral-700);
 }
 
 .results-table td {
     background: var(--neutral-0);
+    font-size: 0.9rem;
 }
 
 .results-table tr:last-child td {
