@@ -393,7 +393,7 @@ section {
 
 .section-tag {
     color: var(--rovo-purple);
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
