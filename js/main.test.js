@@ -107,16 +107,17 @@ describe('getCourseIdFromTab', () => {
 });
 
 describe('activateTab', () => {
+    const TEST_HTML_TEMPLATE = `
+        <button class="course-tab" data-course="course-1">Tab 1</button>
+        <button class="course-tab active" data-course="course-2">Tab 2</button>
+        <div id="course-1" class="course-content">Content 1</div>
+        <div id="course-2" class="course-content active">Content 2</div>
+    `;
+    
     let mockDoc;
     
     beforeEach(() => {
-        // Set up mock document
-        document.body.innerHTML = `
-            <button class="course-tab" data-course="course-1">Tab 1</button>
-            <button class="course-tab active" data-course="course-2">Tab 2</button>
-            <div id="course-1" class="course-content">Content 1</div>
-            <div id="course-2" class="course-content active">Content 2</div>
-        `;
+        document.body.innerHTML = TEST_HTML_TEMPLATE;
         mockDoc = document;
     });
 

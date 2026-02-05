@@ -2,7 +2,6 @@
   "name": "atlassian-rovo-course",
   "version": "1.0.0",
   "description": "Atlassian Rovo AI 課程網站",
-  "main": "js/main.js",
   "scripts": {
     "test": "jest"
   },
