@@ -20,20 +20,20 @@
                 <img src="assets/icons/atlassian-rovo-icon.svg" alt="Atlassian Rovo" width="32" height="32">
                 <span>Atlassian Rovo 課程</span>
             </div>
-            <div class="nav-tabs">
-                <button class="course-tab active" data-course="course0">
+            <div class="nav-tabs" role="tablist" aria-label="課程選擇">
+                <button class="course-tab active" data-course="course0" role="tab" aria-selected="true" aria-controls="course0" id="tab-course0" tabindex="0">
                     <span>Rovo AI 客戶免費入門</span>
                     <span class="level-badge entry">入門</span>
                 </button>
-                <button class="course-tab" data-course="course1">
+                <button class="course-tab" data-course="course1" role="tab" aria-selected="false" aria-controls="course1" id="tab-course1" tabindex="-1">
                     <span>Rovo Agent 自建代理人課程</span>
                     <span class="level-badge beginner">初階</span>
                 </button>
-                <button class="course-tab" data-course="course3">
+                <button class="course-tab" data-course="course3" role="tab" aria-selected="false" aria-controls="course3" id="tab-course3" tabindex="-1">
                     <span>Rovo Agent + 自動化工作流</span>
                     <span class="level-badge intermediate">中階</span>
                 </button>
-                <button class="course-tab" data-course="course2">
+                <button class="course-tab" data-course="course2" role="tab" aria-selected="false" aria-controls="course2" id="tab-course2" tabindex="-1">
                     <span>Rovo Multi-Agent 多代理工作流</span>
                     <span class="level-badge advanced">高階</span>
                 </button>
@@ -43,11 +43,11 @@
     </nav>
 
     <!-- Course 0: Rovo AI 入門實戰（原本的課程） -->
-    <div id="course0" class="course-content active">
+    <div id="course0" class="course-content active" role="tabpanel" aria-labelledby="tab-course0">
         <section class="hero">
             <div class="hero-content">
                 <div class="hero-badge">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
                     </svg>
                     <span>Atlassian 官方認證專家授課</span>
@@ -58,7 +58,7 @@
                 <div class="hero-cta-group">
                     <a href="https://titansoftjira.atlassian.net/servicedesk/customer/portal/133/group/135/create/160" class="btn-primary">
                         <span>立即報名</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"></path>
                         </svg>
                     </a>
@@ -66,21 +66,21 @@
                 </div>
                 <div class="hero-meta">
                     <div class="hero-meta-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"></circle>
                             <path d="M12 6v6l4 2"></path>
                         </svg>
                         <span>60 分鐘高效學習</span>
                     </div>
                     <div class="hero-meta-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                             <circle cx="9" cy="7" r="4"></circle>
                         </svg>
                         <span>適合所有知識工作者</span>
                     </div>
                     <div class="hero-meta-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <rect x="3" y="3" width="18" height="18" rx="2"></rect>
                             <path d="M3 9h18"></path>
                         </svg>
@@ -284,7 +284,7 @@
                 <div class="course-cta-group">
                     <a href="https://titansoftjira.atlassian.net/servicedesk/customer/portal/133/group/135/create/160" class="btn-primary">
                         <span>立即報名</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"></path>
                         </svg>
                     </a>
@@ -294,11 +294,11 @@
     </div>
 
     <!-- Course 1: Rovo Agent 入門實戰 -->
-    <div id="course1" class="course-content">
+    <div id="course1" class="course-content" role="tabpanel" aria-labelledby="tab-course1">
         <section class="hero">
             <div class="hero-content">
                 <div class="hero-badge">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
                     </svg>
                     <span>Atlassian 官方認證專家授課</span>
@@ -309,7 +309,7 @@
                 <div class="hero-cta-group">
                     <a href="https://titansoftjira.atlassian.net/servicedesk/customer/portal/133/group/135/create/160" class="btn-primary">
                         <span>立即報名</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"></path>
                         </svg>
                     </a>
@@ -317,21 +317,21 @@
                 </div>
                 <div class="hero-meta">
                     <div class="hero-meta-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"></circle>
                             <path d="M12 6v6l4 2"></path>
                         </svg>
                         <span>90 分鐘實作課程</span>
                     </div>
                     <div class="hero-meta-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                             <circle cx="9" cy="7" r="4"></circle>
                         </svg>
                         <span>適合初學者</span>
                     </div>
                     <div class="hero-meta-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <rect x="3" y="3" width="18" height="18" rx="2"></rect>
                             <path d="M3 9h18"></path>
                         </svg>
@@ -502,7 +502,7 @@
                 <div class="course-cta-group">
                     <a href="https://titansoftjira.atlassian.net/servicedesk/customer/portal/133/group/135/create/160" class="btn-primary">
                         <span>立即報名</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"></path>
                         </svg>
                     </a>
@@ -512,11 +512,11 @@
     </div>
 
     <!-- Course 2: Multi-Agent 工作流程實戰 -->
-    <div id="course2" class="course-content">
+    <div id="course2" class="course-content" role="tabpanel" aria-labelledby="tab-course2">
         <section class="hero">
             <div class="hero-content">
                 <div class="hero-badge">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
                     </svg>
                     <span>Atlassian 官方認證專家授課</span>
@@ -527,7 +527,7 @@
                 <div class="hero-cta-group">
                     <a href="https://titansoftjira.atlassian.net/servicedesk/customer/portal/133/group/135/create/160" class="btn-primary">
                         <span>立即報名</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"></path>
                         </svg>
                     </a>
@@ -535,21 +535,21 @@
                 </div>
                 <div class="hero-meta">
                     <div class="hero-meta-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"></circle>
                             <path d="M12 6v6l4 2"></path>
                         </svg>
                         <span>180 分鐘實作課程</span>
                     </div>
                     <div class="hero-meta-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                             <circle cx="9" cy="7" r="4"></circle>
                         </svg>
                         <span>需具備 Agent 基礎</span>
                     </div>
                     <div class="hero-meta-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <rect x="3" y="3" width="18" height="18" rx="2"></rect>
                             <path d="M3 9h18"></path>
                         </svg>
@@ -699,7 +699,7 @@
                 <div class="course-cta-group">
                     <a href="https://titansoftjira.atlassian.net/servicedesk/customer/portal/133/group/135/create/160" class="btn-primary">
                         <span>立即報名</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"></path>
                         </svg>
                     </a>
@@ -709,11 +709,11 @@
     </div>
 
     <!-- Course 3: Automation + Rovo Agent 整合實戰 -->
-    <div id="course3" class="course-content">
+    <div id="course3" class="course-content" role="tabpanel" aria-labelledby="tab-course3">
         <section class="hero">
             <div class="hero-content">
                 <div class="hero-badge">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
                     </svg>
                     <span>Atlassian 官方認證專家授課</span>
@@ -724,7 +724,7 @@
                 <div class="hero-cta-group">
                     <a href="https://titansoftjira.atlassian.net/servicedesk/customer/portal/133/group/135/create/160" class="btn-primary">
                         <span>立即報名</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"></path>
                         </svg>
                     </a>
@@ -732,21 +732,21 @@
                 </div>
                 <div class="hero-meta">
                     <div class="hero-meta-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"></circle>
                             <path d="M12 6v6l4 2"></path>
                         </svg>
                         <span>120 分鐘實作課程</span>
                     </div>
                     <div class="hero-meta-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                             <circle cx="9" cy="7" r="4"></circle>
                         </svg>
                         <span>需具備 Agent 基礎</span>
                     </div>
                     <div class="hero-meta-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <rect x="3" y="3" width="18" height="18" rx="2"></rect>
                             <path d="M3 9h18"></path>
                         </svg>
@@ -898,7 +898,7 @@
                 <div class="course-cta-group">
                     <a href="https://titansoftjira.atlassian.net/servicedesk/customer/portal/133/group/135/create/160" class="btn-primary">
                         <span>立即報名</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"></path>
                         </svg>
                     </a>
@@ -915,7 +915,7 @@
                 <span style="font-weight: 600;">Atlassian Rovo 課程</span>
             </div>
             <p>Atlassian Solution Partner | TITANSOFT 新加坡商鈦坦科技</p>
-            <p style="margin-top: 0.5rem;">© 2026 All rights reserved.</p>
+            <p style="margin-top: 0.5rem;">© 2025 All rights reserved.</p>
         </div>
     </footer>
 
