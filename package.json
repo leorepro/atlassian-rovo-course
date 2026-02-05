@@ -1,0 +1,19 @@
+{
+  "name": "atlassian-rovo-course",
+  "version": "1.0.0",
+  "description": "Atlassian Rovo AI 課程網站",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "atlassian",
+    "rovo",
+    "course"
+  ],
+  "author": "TITANSOFT",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}
